@@ -1,0 +1,68 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: night --default;
+}
+
+/* ── Override night theme with original GitHub dark palette ── */
+:root, [data-theme="night"] {
+  --color-base-100: oklch(10.2% 0.015 264);
+  --color-base-200: oklch(13.8% 0.018 264);
+  --color-base-300: oklch(18.2% 0.016 264);
+  --color-base-content: oklch(92.5% 0.006 240);
+  --color-primary: oklch(67% 0.172 244);
+  --color-primary-content: oklch(10% 0.015 264);
+  --color-info: oklch(67% 0.172 244);
+  --color-info-content: oklch(10% 0.015 264);
+  --color-success: oklch(67.5% 0.188 145);
+  --color-success-content: oklch(10% 0.015 264);
+  --color-warning: oklch(78% 0.172 90);
+  --color-warning-content: oklch(10% 0.015 264);
+  --color-error: oklch(63% 0.214 26);
+  --color-error-content: oklch(10% 0.015 264);
+  --color-neutral: oklch(23% 0.012 264);
+  --color-neutral-content: oklch(55% 0.01 264);
+  --radius-box: 0.625rem;
+  --radius-field: 0.375rem;
+  --radius-selector: 0.375rem;
+}
+
+/* ── Gradient header ── */
+.police-header {
+  background: linear-gradient(135deg, #1c2938 0%, #0d1b2a 100%);
+  border-bottom: 2px solid #1e6fa8;
+}
+
+/* ── Stat card colour variants ── */
+.stat-highlight { border-color: #1e6fa8 !important; background-color: #0d1b2a !important; }
+.stat-success   { border-color: #3fb950 !important; background-color: #001a00 !important; }
+.stat-warn      { border-color: #d29922 !important; background-color: #1a1200 !important; }
+.stat-danger    { border-color: #f85149 !important; background-color: #1a0000 !important; }
+
+/* ── Note item — left border style (replaces DaisyUI alert) ── */
+.note-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #0d1117;
+  border-left: 3px solid #30363d;
+  border-radius: 0 0.375rem 0.375rem 0;
+  font-size: 0.81rem;
+  color: #c9d1d9;
+  line-height: 1.45;
+}
+.note-row.note-info   { border-left-color: #1e6fa8; }
+.note-row.note-warn   { border-left-color: #d29922; }
+.note-row.note-danger { border-left-color: #f85149; }
+.note-row.note-ok     { border-left-color: #3fb950; }
+
+.note-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+.dot-info   { background-color: #58a6ff; }
+.dot-warn   { background-color: #e3b341; }
+.dot-danger { background-color: #f85149; }
+.dot-ok     { background-color: #3fb950; }
