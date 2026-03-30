@@ -5,7 +5,7 @@ import InputPanel from './components/InputPanel'
 import ResultPanel from './components/ResultPanel'
 
 export default function App() {
-  const [opId, setOpId] = useState('operations')
+  const [opId, setOpId] = useState('tier1_bank')
   const [rebels, setRebels] = useState(6)
   const [mraps, setMraps] = useState(0)
   const [escortSize, setEscortSize] = useState('small')

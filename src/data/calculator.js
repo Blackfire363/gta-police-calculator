@@ -26,7 +26,6 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
     // ── TIER 1 ───────────────────────────────────────────────────────────────
     case 'tier1_bank': {
       result.minOfficers = 14
-      if (blufor < 14) result.notes.push({ text: `WARNING: Need at least 14 BLUFOR online to respond (currently ${blufor})`, type: 'danger' })
       // Minimum 14 always; ratio 1:1.5 only applies once minimum is exceeded
       result.maxOfficers = Math.max(14, Math.ceil(r * 1.5))
       result.heavies = 0
@@ -49,7 +48,6 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
     // ── TIER 2 ───────────────────────────────────────────────────────────────
     case 'tier2_bank': {
       result.minOfficers = 16
-      if (blufor < 16) result.notes.push({ text: `WARNING: Need at least 16 BLUFOR online to respond (currently ${blufor})`, type: 'danger' })
       result.maxOfficers = Math.max(16, r * 2)
       result.heavies = Math.floor(r * 0.5)
       result.gear = 'box'
@@ -87,7 +85,6 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
     // ── TIER 3 (USS Destroyers) ───────────────────────────────────────────────
     case 'tier3_bank': {
       result.minOfficers = 22
-      if (blufor < 22) result.notes.push({ text: `WARNING: Need at least 22 BLUFOR online to respond (currently ${blufor})`, type: 'danger' })
       // Minimum 22; ratio 2:1 applies above minimum
       result.maxOfficers = Math.max(22, r * 2)
       result.heavies = Infinity
@@ -118,7 +115,6 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
     // ── TIER 4 (Paros & Athira Oil Depot) ────────────────────────────────────
     case 'tier4_bank': {
       result.minOfficers = 22
-      if (blufor < 22) result.notes.push({ text: `WARNING: Need at least 22 BLUFOR online to respond (currently ${blufor})`, type: 'danger' })
       result.maxOfficers = null  // no ceiling
       result.heavies = Infinity
       result.gear = 'any'
@@ -154,7 +150,6 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
     // ── TIER 5 (Royal Mint) ───────────────────────────────────────────────────
     case 'tier5_bank': {
       result.minOfficers = 28
-      if (blufor < 28) result.notes.push({ text: `WARNING: Need at least 28 BLUFOR online to respond (currently ${blufor})`, type: 'danger' })
       result.maxOfficers = null
       result.heavies = Infinity
       result.gear = 'any'
