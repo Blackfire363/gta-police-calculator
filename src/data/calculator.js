@@ -49,7 +49,7 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
     case 'tier2_bank': {
       result.minOfficers = 16
       result.maxOfficers = Math.max(16, r * 2)
-      result.heavies = Math.floor(r * 0.5)
+      result.heavies = Math.ceil(r * 0.5)
       result.gear = 'box'
       result.prohibitedSpecials = ['Zafir 7.62mm']
 
@@ -187,7 +187,7 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
       result.notes.push({ text: 'PCSO may only attend if RTO+ is present', type: 'warn' })
       if (r >= 8) {
         result.gear = 'box'
-        result.heavies = Math.floor(r * 0.5)
+        result.heavies = Math.ceil(r * 0.5)
         result.vehicles.push({ text: 'Unmarked vehicles allowed for all', type: 'ok' })
         result.vehicles.push({ text: 'LSVs allowed if rank grants access — no dropping to lower ranks in heists', type: 'warn' })
         result.notes.push({ text: '8+ rebels: box gear open, heavies ratio 0.5:1', type: 'ok' })
@@ -207,8 +207,8 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
       result.notes.push({ text: 'You cannot be dropped a heavy weapon without A/CC+ approval', type: 'danger' })
       if (r >= 10) {
         result.gear = 'box'
-        result.heavies = Math.floor(r * 0.5)
-        result.notes.push({ text: `Box open (10+ rebels): ${Math.floor(r * 0.5)} heavies allowed (0.5:1 ratio)`, type: 'ok' })
+        result.heavies = Math.ceil(r * 0.5)
+        result.notes.push({ text: `Box open (10+ rebels): ${Math.ceil(r * 0.5)} heavies allowed (0.5:1 ratio)`, type: 'ok' })
         result.notes.push({ text: 'Heavies can be dropped to lower ranks by SUPT+', type: 'info' })
         result.notes.push({ text: 'Box: no special weapons unless it is your patrol gear', type: 'danger' })
         result.notes.push({ text: 'Cyrus/MAR-10: benching ONLY if you have access — other specials require A/CC+ permission', type: 'warn' })
@@ -271,16 +271,16 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
       result.prohibitedSpecials = ['.50 cal BW magazines', 'Zafir 7.62mm', 'Heavy Snipers']
       if (r < 6) {
         // 3-5 rebels capped a point: SFO may attend, but only Chief/Co-Chief or A/CC+ can authorise
-        result.maxOfficers = Math.floor(r * 0.5)
-        result.heavies = Math.floor(r * 0.5)
-        result.notes.push({ text: `Under 6 rebels: SFO-only, ratio 0.5:1 — ${Math.floor(r * 0.5)} officer(s) max`, type: 'info' })
+        result.maxOfficers = Math.ceil(r * 0.5)
+        result.heavies = Math.ceil(r * 0.5)
+        result.notes.push({ text: `Under 6 rebels: SFO-only, ratio 0.5:1 — ${Math.ceil(r * 0.5)} officer(s) max`, type: 'info' })
         result.notes.push({ text: 'CONDITION: gang must have capped Church / OG Credit Cartel / Drug Cartel (3+ rebels)', type: 'warn' })
         result.rank.push('Chief / Co-Chief or A/CC+ must authorise (SFO 3 is NOT enough for under-6-rebel raids)')
         result.rank.push('Authorising officer MUST be in attendance')
         result.rank.push('C/SUPT CANNOT authorise raids')
       } else {
         result.maxOfficers = r
-        result.heavies = Math.floor(r * 0.5)
+        result.heavies = Math.ceil(r * 0.5)
         result.notes.push({ text: 'Ratio: 1:1 (police:rebels)', type: 'info' })
         result.notes.push({ text: 'Heavy ratio: 0.5:1', type: 'info' })
         result.notes.push({ text: 'CONDITION: gang with 6+ members captures Church / OG Credit Cartel / Drug Cartel', type: 'warn' })
