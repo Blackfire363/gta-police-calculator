@@ -180,9 +180,9 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
     // ── HEIST ────────────────────────────────────────────────────────────────
     case 'heist': {
       result.minOfficers = 8
-      result.maxOfficers = Math.max(8, r * 2)
+      result.maxOfficers = Math.max(8, Math.ceil(r * 1.5))
       result.notes.push({ text: 'Minimum 8 officers regardless of rebel count', type: 'info' })
-      result.notes.push({ text: 'Ratio: 2:1 (police:rebels)', type: 'info' })
+      result.notes.push({ text: 'Ratio: 1:1.5 (police:rebels)', type: 'info' })
       result.notes.push({ text: 'KOS on triggering gang — no roleplay required', type: 'warn' })
       result.notes.push({ text: 'PCSO may only attend if RTO+ is present', type: 'warn' })
       if (r >= 8) {
