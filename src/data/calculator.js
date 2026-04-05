@@ -11,6 +11,7 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
     maxOfficers: null,
     minOfficers: null,
     heavies: 0,
+    heaviesNote: '',       // override subtitle for heavies stat card
     policeMraps: 0,        // number of MRAPs/Ifrits police may bring
     mrapNote: '',          // explanation for policeMraps value
     specials: [],          // string[] — permitted special weapons
@@ -49,22 +50,10 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
     case 'tier2_bank': {
       result.minOfficers = 16
       result.maxOfficers = Math.max(16, r * 2)
-      result.heavies = Math.ceil(r * 0.5)
+      result.heavies = Math.floor(r * 0.4)
+      result.heaviesNote = `0.4:1 ratio, rounded down (${r} rebels)`
       result.gear = 'box'
-      result.prohibitedSpecials = ['Zafir 7.62mm']
-
-      // Specials: 8-9 rebels = EITHER .50 OR Cyrus; 10+ = BOTH
-      if (r >= 10) {
-        result.specials.push('2× .50 cal BW mags (1 officer)')
-        result.specials.push('1× Cyrus 9.3mm or MAR-10 .338 LM')
-        result.notes.push({ text: '10+ rebels: 1 officer gets 2× .50 cal mags AND 1× Cyrus/MAR-10', type: 'ok' })
-      } else if (r >= 8) {
-        result.specials.push('2× .50 cal mags OR 1× Cyrus/MAR-10 (choose one, 1 officer)')
-        result.notes.push({ text: '8+ rebels: 1 officer may receive 2× .50 cal mags OR 1× Cyrus/MAR-10 — not both', type: 'ok' })
-      }
-      if (r >= 8) {
-        result.notes.push({ text: 'Cyrus/MAR-10: minimum 600m range; CQC only if 5 or fewer officers remain on ground', type: 'warn' })
-      }
+      result.prohibitedSpecials = ['All Specials']
 
       // Police MRAPs: 1 if 10+ rebels; match gang 1:1 (.50 offroad = MRAP)
       result.policeMraps = Math.max(r >= 10 ? 1 : 0, m)
@@ -75,8 +64,10 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
       result.vehicles.push({ text: 'All attending officers may take an unmarked vehicle', type: 'ok' })
       result.vehicles.push({ text: 'LSVs (light or regular) allowed if your rank grants access; SUPT+ can give to lower ranks with sufficient reason', type: 'info' })
       result.vehicles.push({ text: 'Orca: allowed without Hellcat regardless; with Hellcat if 6+ rebels (SFO 2 or C/INSP+ permission)', type: 'info' })
+      result.notes.push({ text: 'NO specials at Tier 2 banks', type: 'danger' })
       result.notes.push({ text: 'Ratio 2:1 — minimum 16 officers regardless of rebel count', type: 'info' })
-      result.notes.push({ text: 'SUPT+ can drop heavies to lower ranks; C/SUPT+ can drop specials', type: 'info' })
+      result.notes.push({ text: 'Heavy ratio: 0.4:1, always round down — A/CC+ count towards heavy limit', type: 'warn' })
+      result.notes.push({ text: 'SUPT+ can drop heavies to lower ranks', type: 'info' })
       result.notes.push({ text: 'Hellcat should go up as soon as possible with pilot and spotter', type: 'warn' })
       result.notes.push({ text: 'PCSOs are allowed to attend', type: 'ok' })
       break
@@ -87,16 +78,17 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
       result.minOfficers = 22
       // Minimum 22; ratio 2:1 applies above minimum
       result.maxOfficers = Math.max(22, r * 2)
-      result.heavies = Infinity
+      result.heavies = Math.floor(r * 0.4)
+      result.heaviesNote = `0.4:1 ratio, rounded down (${r} rebels)`
       result.gear = 'any'
 
       result.specials.push('1× Zafir 7.62mm (always)')
       result.specials.push('2× .50 cal BW mags each to 2 officers (always)')
-      result.specials.push('1× Cyrus 9.3mm or MAR-10 (always)')
-      if (r >= 10) result.specials.push('2nd Cyrus/MAR-10 (10+ rebels)')
+      result.prohibitedSpecials = ['Cyrus 9.3mm', 'MAR-10 .338 LM']
 
-      result.notes.push({ text: 'Cyrus/MAR-10: minimum 600m range; CQC only if 5 or fewer officers remain on ground', type: 'warn' })
-      result.notes.push({ text: 'No heavy weapon limit; SUPT+ drops heavies (restrictively); C/SUPT+ drops specials', type: 'info' })
+      result.notes.push({ text: 'NO Cyrus/MAR-10 at Tier 3 — Zafir and .50 mags allowed', type: 'danger' })
+      result.notes.push({ text: 'Heavy ratio: 0.4:1, always round down — A/CC+ count towards heavy limit', type: 'warn' })
+      result.notes.push({ text: 'SUPT+ drops heavies (restrictively); C/SUPT+ drops specials', type: 'info' })
 
       // MRAPs: 2 base; if gang has 2+ MRAPs, take 1 more than gang (.50 offroad = MRAP)
       result.policeMraps = calcBankMraps(m, 2)
@@ -116,7 +108,8 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
     case 'tier4_bank': {
       result.minOfficers = 22
       result.maxOfficers = null  // no ceiling
-      result.heavies = Infinity
+      result.heavies = Math.floor(r * 0.4)
+      result.heaviesNote = `0.4:1 ratio, rounded down (${r} rebels)`
       result.gear = 'any'
 
       result.specials.push('1× Zafir 7.62mm (always)')
@@ -127,7 +120,8 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
 
       result.notes.push({ text: 'Cyrus/MAR-10: minimum 600m range; CQC only if 5 or fewer officers remain on ground', type: 'warn' })
       result.notes.push({ text: 'No response ceiling — unlimited officers', type: 'info' })
-      result.notes.push({ text: 'No heavy weapon limit; SUPT+ drops heavies (restrictively); C/SUPT+ drops specials', type: 'info' })
+      result.notes.push({ text: 'Heavy ratio: 0.4:1, always round down — A/CC+ count towards heavy limit', type: 'warn' })
+      result.notes.push({ text: 'SUPT+ drops heavies (restrictively); C/SUPT+ drops specials', type: 'info' })
 
       // MRAPs: 2 base; +1 over gang if gang has 2+
       result.policeMraps = calcBankMraps(m, 2)
@@ -151,7 +145,8 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
     case 'tier5_bank': {
       result.minOfficers = 28
       result.maxOfficers = null
-      result.heavies = Infinity
+      result.heavies = Math.floor(r * 0.4)
+      result.heaviesNote = `0.4:1 ratio, rounded down (${r} rebels)`
       result.gear = 'any'
 
       result.specials.push('2× Zafir 7.62mm (always)')
@@ -161,7 +156,8 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
 
       result.notes.push({ text: 'Cyrus/MAR-10: minimum 600m range; CQC only if 5 or fewer officers remain on ground', type: 'warn' })
       result.notes.push({ text: 'No response ceiling — unlimited officers', type: 'info' })
-      result.notes.push({ text: 'No heavy weapon limit; SUPT+ drops heavies (restrictively); C/SUPT+ drops specials', type: 'info' })
+      result.notes.push({ text: 'Heavy ratio: 0.4:1, always round down — A/CC+ count towards heavy limit', type: 'warn' })
+      result.notes.push({ text: 'SUPT+ drops heavies (restrictively); C/SUPT+ drops specials', type: 'info' })
 
       // MRAPs: 4 base; +1 over gang if gang has 2+
       result.policeMraps = Math.max(4, m >= 2 ? m + 1 : 4)
@@ -201,7 +197,8 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
 
     // ── GENERAL OPERATIONS ────────────────────────────────────────────────────
     case 'operations': {
-      result.maxOfficers = Math.max(2, r * 2)
+      result.maxOfficers = Math.max(2, Math.floor(r * 1.5))
+      result.notes.push({ text: 'Ratio 1.5:1 (police:rebels)', type: 'info' })
       result.notes.push({ text: 'Use common sense — consider gear AND vehicles, not just numbers', type: 'warn' })
       result.notes.push({ text: 'Appoint an Operations Commander (OC) immediately', type: 'info' })
       result.notes.push({ text: 'You cannot be dropped a heavy weapon without A/CC+ approval', type: 'danger' })

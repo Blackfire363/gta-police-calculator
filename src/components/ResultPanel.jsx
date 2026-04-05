@@ -18,7 +18,7 @@ export default function ResultPanel({ res, rebels, mraps }) {
   const maxOfficersColor = res.maxOfficers === null ? 'green' : 'blue'
 
   const heaviesValue = res.heavies === Infinity ? '∞' : String(res.heavies)
-  const heaviesSub   = res.heavies === Infinity ? 'Unlimited' : res.heavies === 0 ? 'None permitted' : `0.5:1 ratio (${rebels} rebels)`
+  const heaviesSub   = res.heavies === Infinity ? 'Unlimited' : res.heavies === 0 ? 'None permitted' : (res.heaviesNote || `0.5:1 ratio (${rebels} rebels)`)
   const heaviesColor = res.heavies === Infinity ? 'green' : res.heavies === 0 ? 'red' : 'yellow'
 
   return (

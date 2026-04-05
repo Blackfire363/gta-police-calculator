@@ -25,6 +25,23 @@ export default function WeaponReference() {
           <li>· MAR-10 .338 LM</li>
           <li>· .50 cal BW mags (Type 115 itself is not restricted)</li>
         </ul>
+        <div className="divider my-1" />
+        <div className="text-xs font-bold uppercase tracking-widest text-base-content/50 mb-1">Vendor Weapon Ranks (On Patrol)</div>
+        <ul className="text-sm flex flex-col gap-0.5 text-base-content/70">
+          <li>· <span className="font-semibold">C/SUPT+</span> — MX-SW, RPK-12</li>
+          <li>· <span className="font-semibold">SUPT+</span> — CAR-95-1, SPAR-16S, LIM</li>
+        </ul>
+        <div className="divider my-1" />
+        <div className="text-xs font-bold uppercase tracking-widest text-base-content/50 mb-1">Max Magazines (All Situations)</div>
+        <ul className="text-sm flex flex-col gap-0.5 text-base-content/70">
+          <li>· 7.62mm — 16× mags</li>
+          <li>· 9.3mm — 10× mags</li>
+          <li>· .338 — 10× mags</li>
+          <li>· 6.5mm 100Rnd — 5× mags</li>
+          <li>· 6.5mm 200Rnd — 4× mags</li>
+          <li>· 7.62mm 150Rnd — 3× mags</li>
+        </ul>
+        <div className="text-xs text-warning mt-1">Do not take excessive ammo, toolkits, spike strips or first aid kits on patrol.</div>
       </div>
     </div>
   )
