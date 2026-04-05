@@ -27,20 +27,33 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
     // ── TIER 1 ───────────────────────────────────────────────────────────────
     case 'tier1_bank': {
       result.minOfficers = 14
-      // Minimum 14 always; ratio 1:1.5 only applies once minimum is exceeded
+      // Minimum 14 always; ratio 1.5:1 only applies once minimum is exceeded
       result.maxOfficers = Math.max(14, Math.ceil(r * 1.5))
-      result.heavies = 0
+      result.heavies = Math.floor(r * 0.4)
+      result.heaviesNote = `0.4:1 ratio, rounded down (${r} rebels)`
       result.gear = 'box'
-      result.prohibitedSpecials = ['All Heavies', 'All Specials']
-      // MRAPs: 1:1 with gang MRAPs only
-      result.policeMraps = m
-      result.mrapNote = m > 0 ? `Match gang MRAPs 1:1 (${m} allowed)` : 'Only allowed to match gang MRAPs'
+      result.prohibitedSpecials = ['All Specials']
+      // MRAPs: none unless 10+ rebels (Hunter only) or matching rebel MRAPs
+      if (r >= 10) {
+        result.policeMraps = Math.max(1, m)
+        result.mrapNote = m > 0 ? `10+ rebels: Hunter allowed + match gang MRAPs 1:1 (${m})` : '10+ rebels: 1 Hunter allowed (Hunter only)'
+        result.vehicles.push({ text: '10+ rebels: 1 Police Hunter permitted (Hunter only, no Ifrit)', type: 'ok' })
+        if (m > 0) result.vehicles.push({ text: `${m} gang MRAP(s) → match 1:1`, type: 'ok' })
+      } else if (m > 0) {
+        result.policeMraps = m
+        result.mrapNote = `Match gang MRAPs 1:1 (${m} allowed)`
+        result.vehicles.push({ text: `${m} gang MRAP(s) → ${m} Police MRAP(s) allowed (1:1 only)`, type: 'ok' })
+      } else {
+        result.policeMraps = 0
+        result.mrapNote = 'No MRAPs unless 10+ rebels or matching gang MRAPs'
+      }
       result.vehicles.push({ text: 'All attending officers may take an unmarked vehicle', type: 'ok' })
       result.vehicles.push({ text: 'LSVs (light or regular) allowed if your rank grants access', type: 'info' })
-      if (m > 0) result.vehicles.push({ text: `${m} gang MRAP(s) → ${m} Police MRAP(s) allowed (1:1 only)`, type: 'ok' })
       result.vehicles.push({ text: 'Orca: allowed without Hellcat regardless of rebel count; with Hellcat if 6+ rebels (SFO 2 or C/INSP+ permission)', type: 'info' })
-      result.notes.push({ text: 'NO heavies or specials at these banks — box gear otherwise allowed', type: 'danger' })
-      result.notes.push({ text: 'Ratio 1:1.5 — minimum 14 officers regardless of rebel count', type: 'info' })
+      result.notes.push({ text: 'NO specials at Tier 1 banks — box gear otherwise allowed', type: 'danger' })
+      result.notes.push({ text: 'No MRAPs unless 10+ rebels online or matching gang MRAPs (Hunter only for 10+)', type: 'warn' })
+      result.notes.push({ text: 'Heavy ratio: 0.4:1, always round down — A/CC+ count towards heavy limit', type: 'warn' })
+      result.notes.push({ text: 'Ratio 1.5:1 — minimum 14 officers regardless of rebel count', type: 'info' })
       result.notes.push({ text: 'Hellcat should go up as soon as possible with pilot and spotter', type: 'warn' })
       result.notes.push({ text: 'PCSOs are allowed to attend', type: 'ok' })
       break
@@ -49,7 +62,7 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
     // ── TIER 2 ───────────────────────────────────────────────────────────────
     case 'tier2_bank': {
       result.minOfficers = 16
-      result.maxOfficers = Math.max(16, r * 2)
+      result.maxOfficers = Math.max(16, Math.ceil(r * 1.5))
       result.heavies = Math.floor(r * 0.4)
       result.heaviesNote = `0.4:1 ratio, rounded down (${r} rebels)`
       result.gear = 'box'
@@ -65,7 +78,7 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
       result.vehicles.push({ text: 'LSVs (light or regular) allowed if your rank grants access; SUPT+ can give to lower ranks with sufficient reason', type: 'info' })
       result.vehicles.push({ text: 'Orca: allowed without Hellcat regardless; with Hellcat if 6+ rebels (SFO 2 or C/INSP+ permission)', type: 'info' })
       result.notes.push({ text: 'NO specials at Tier 2 banks', type: 'danger' })
-      result.notes.push({ text: 'Ratio 2:1 — minimum 16 officers regardless of rebel count', type: 'info' })
+      result.notes.push({ text: 'Ratio 1.5:1 — minimum 16 officers regardless of rebel count', type: 'info' })
       result.notes.push({ text: 'Heavy ratio: 0.4:1, always round down — A/CC+ count towards heavy limit', type: 'warn' })
       result.notes.push({ text: 'SUPT+ can drop heavies to lower ranks', type: 'info' })
       result.notes.push({ text: 'Hellcat should go up as soon as possible with pilot and spotter', type: 'warn' })
@@ -76,8 +89,8 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
     // ── TIER 3 (USS Destroyers) ───────────────────────────────────────────────
     case 'tier3_bank': {
       result.minOfficers = 22
-      // Minimum 22; ratio 2:1 applies above minimum
-      result.maxOfficers = Math.max(22, r * 2)
+      // Minimum 22; ratio 1.5:1 applies above minimum
+      result.maxOfficers = Math.max(22, Math.ceil(r * 1.5))
       result.heavies = Math.floor(r * 0.4)
       result.heaviesNote = `0.4:1 ratio, rounded down (${r} rebels)`
       result.gear = 'any'
@@ -98,7 +111,7 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
       result.vehicles.push({ text: 'All attending officers may take an unmarked vehicle', type: 'ok' })
       result.vehicles.push({ text: 'LSVs if rank grants access; SUPT+/SFO can give to all lower ranks (doorless LSVs on Destroyers)', type: 'info' })
       result.vehicles.push({ text: 'Orca may be used in combination with Hellcat regardless of rebel count', type: 'ok' })
-      result.notes.push({ text: 'Ratio 2:1 — minimum 22 officers regardless of rebel count', type: 'info' })
+      result.notes.push({ text: 'Ratio 1.5:1 — minimum 22 officers regardless of rebel count', type: 'info' })
       result.notes.push({ text: 'Hellcat should go up as soon as possible with pilot and spotter', type: 'warn' })
       result.notes.push({ text: 'PCSOs are allowed to attend', type: 'ok' })
       break
@@ -179,6 +192,7 @@ export function calculate(opId, rebels, mrapCount, escortSize, bankLocation) {
       result.maxOfficers = Math.max(8, Math.ceil(r * 1.5))
       result.notes.push({ text: 'Minimum 8 officers regardless of rebel count', type: 'info' })
       result.notes.push({ text: 'Ratio: 1:1.5 (police:rebels)', type: 'info' })
+      result.notes.push({ text: 'Police go off number of players online in triggering gang unless dispatch specifically states the number attending', type: 'warn' })
       result.notes.push({ text: 'KOS on triggering gang — no roleplay required', type: 'warn' })
       result.notes.push({ text: 'PCSO may only attend if RTO+ is present', type: 'warn' })
       if (r >= 8) {

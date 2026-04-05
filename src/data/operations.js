@@ -1,7 +1,7 @@
 export const OPERATIONS = [
-  { id: 'tier1_bank',         group: 'Banks',      name: 'Tier 1 — Ghost Hotel · Chalkelia · Therisa', sub: 'Min 14 BLUFOR · Ratio 1.5:1 · No heavies' },
-  { id: 'tier2_bank',         group: 'Banks',      name: 'Tier 2 — Neochori · Zaros · Syrta · Molos',  sub: 'Min 16 BLUFOR · Ratio 2:1 · Heavies 0.4:1' },
-  { id: 'tier3_bank',         group: 'Banks',      name: 'Tier 3 — USS Destroyers',                    sub: 'Min 22 BLUFOR · Ratio 2:1 · Heavies 0.4:1' },
+  { id: 'tier1_bank',         group: 'Banks',      name: 'Tier 1 — Ghost Hotel · Chalkelia · Therisa', sub: 'Min 14 BLUFOR · Ratio 1.5:1 · Heavies 0.4:1' },
+  { id: 'tier2_bank',         group: 'Banks',      name: 'Tier 2 — Neochori · Zaros · Syrta · Molos',  sub: 'Min 16 BLUFOR · Ratio 1.5:1 · Heavies 0.4:1' },
+  { id: 'tier3_bank',         group: 'Banks',      name: 'Tier 3 — USS Destroyers',                    sub: 'Min 22 BLUFOR · Ratio 1.5:1 · Heavies 0.4:1' },
   { id: 'tier4_bank',         group: 'Banks',      name: 'Tier 4 — Paros · Athira Oil Depot',          sub: 'Min 22 BLUFOR · No ceiling · Heavies 0.4:1' },
   { id: 'tier5_bank',         group: 'Banks',      name: 'Tier 5 — Royal Mint',                        sub: 'Min 28 BLUFOR · Unlimited · Heavies 0.4:1 · 4 MRAPs · 2 Zafirs' },
   { id: 'heist',              group: 'Operations', name: 'Heist',                                      sub: 'Topolia PO · IDAP · Bitcoin · Yeezy · Jewellers · Fence' },

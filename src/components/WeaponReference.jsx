@@ -28,8 +28,7 @@ export default function WeaponReference() {
         <div className="divider my-1" />
         <div className="text-xs font-bold uppercase tracking-widest text-base-content/50 mb-1">Vendor Weapon Ranks (On Patrol)</div>
         <ul className="text-sm flex flex-col gap-0.5 text-base-content/70">
-          <li>· <span className="font-semibold">C/SUPT+</span> — MX-SW, RPK-12</li>
-          <li>· <span className="font-semibold">SUPT+</span> — CAR-95-1, SPAR-16S, LIM</li>
+          <li>· <span className="font-semibold">SUPT+</span> — All LMGs (MX-SW, RPK-12, CAR-95-1, SPAR-16S, LIM)</li>
         </ul>
         <div className="divider my-1" />
         <div className="text-xs font-bold uppercase tracking-widest text-base-content/50 mb-1">Max Magazines (All Situations)</div>
